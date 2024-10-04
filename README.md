@@ -2,54 +2,53 @@
 
 A project to render 3D scene from external data
 
-## Install python programs
+## Install
 
-- Install
+- Install python programs
 
 ```
 cd data-provider
 pip install -r requirements.txt
 ```
 
-## Data provider (http)
+- Install ThreeJS application
 
-- Run
+```
+cd scene-renderer
+npm install
+```
+
+
+## Run
+
+- Run scene rendere (ThreeJS)
+
+```
+cd scene-renderer
+npm run start
+```
+
+- Run data provider (python)
 
 ```
 cd data-provider
-python data-provider.py
+python websocket-data-provider.py
 ```
 
-- Tester
+- Test client (python)
 
-```
-cd data-provider
-python data-provider-tester.py
-```
-
-## Data provider (websocket)
-
-- Run
+Test single connection. The server must be running first.
 
 ```
 cd data-provider
-python websockete-data-provider.py
+python websocket-data-provider-tester.py
 ```
 
-- Test client
-
-Test single connection. Ther server must be running first.
+Test with auto reconnect. (python)
 
 ```
 cd data-provider
-python websockete-data-provider-tester.py
-```
-
-Test auto reconnect.
-
-```
-cd data-provider
-python websockete-data-provider-tester2.py
+python websocket-data-provider-tester2.py
 ```
 
 ## License
