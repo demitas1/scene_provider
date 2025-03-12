@@ -11,7 +11,6 @@ const wsClient = new WebSocketClient('ws://localhost:8765', (data) => app.update
 // Add some basic styling
 const style = document.createElement('style');
 style.textContent = `
-  body { margin: 0; }
-  canvas { display: block; }
+  body { margin: 0; overflow: auto; }
 `;
 document.head.appendChild(style);

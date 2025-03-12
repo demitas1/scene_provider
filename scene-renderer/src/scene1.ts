@@ -7,18 +7,32 @@ export class ThreeJSApp {
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
   private cubes: Map<string, THREE.Mesh>;
+  private container: HTMLElement;
 
   constructor() {
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    //this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    // TODO: size of screen should be defined outside the ThreeJSApp
+    this.camera = new THREE.PerspectiveCamera(75, 1024 / 768, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer();
     this.cubes = new Map();
+
+    // Create container div
+    // TODO: container div should be defined outside the ThreeJSApp
+    this.container = document.createElement('div');
+    this.container.style.width = '1024px';
+    this.container.style.height = '768px';
+    this.container.style.position = 'absolute';
+    this.container.style.top = '0';
+    this.container.style.left = '0';
+    document.body.appendChild(this.container);
 
     this.init();
   }
 
   private init() {
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    //this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(1024, 768);
     document.body.appendChild(this.renderer.domElement);
 
     this.camera.position.z = 15;
@@ -39,9 +53,13 @@ export class ThreeJSApp {
   }
 
   private onWindowResize() {
-    this.camera.aspect = window.innerWidth / window.innerHeight;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    // TODO:
+    // Fixed size, we're not changing the camera aspect or renderer size on window resize
+    // but we'll keep this method to implement responsive behavior later
+
+    //this.camera.aspect = window.innerWidth / window.innerHeight;
+    //this.camera.updateProjectionMatrix();
+    //this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   private animate() {
@@ -59,5 +77,3 @@ export class ThreeJSApp {
     });
   }
 }
-
-
