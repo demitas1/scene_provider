@@ -1,39 +1,43 @@
 import * as THREE from 'three';
 import { ObjectData } from './data-interface';
 
-
 export class ThreeJSApp {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
   private cubes: Map<string, THREE.Mesh>;
-  private container: HTMLElement;
+  private container: HTMLElement | null = null;
 
   constructor() {
     this.scene = new THREE.Scene();
-    //this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    // TODO: size of screen should be defined outside the ThreeJSApp
     this.camera = new THREE.PerspectiveCamera(75, 1024 / 768, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer();
     this.cubes = new Map();
 
-    // Create container div
-    // TODO: container div should be defined outside the ThreeJSApp
-    this.container = document.createElement('div');
-    this.container.style.width = '1024px';
-    this.container.style.height = '768px';
-    this.container.style.position = 'absolute';
-    this.container.style.top = '0';
-    this.container.style.left = '0';
-    document.body.appendChild(this.container);
+    // Set renderer size to match container dimensions
+    this.renderer.setSize(1024, 768);
 
-    this.init();
+    // Initialize after a short delay to ensure DOM is ready
+    setTimeout(() => {
+      this.init();
+    }, 100);
   }
 
   private init() {
-    //this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setSize(1024, 768);
-    document.body.appendChild(this.renderer.domElement);
+    // Get the container from the DOM (created by React)
+    this.container = document.getElementById('scene-container');
+
+    if (!this.container) {
+      console.error('Could not find scene container element');
+      return;
+    }
+
+    // Clear any existing content in the container
+    while (this.container.firstChild) {
+      this.container.removeChild(this.container.firstChild);
+    }
+    // Append the renderer to the container
+    this.container.appendChild(this.renderer.domElement);
 
     this.camera.position.z = 15;
 
@@ -47,19 +51,7 @@ export class ThreeJSApp {
       this.cubes.set(`object${i + 1}`, cube);
     }
 
-    window.addEventListener('resize', () => this.onWindowResize(), false);
-
     this.animate();
-  }
-
-  private onWindowResize() {
-    // TODO:
-    // Fixed size, we're not changing the camera aspect or renderer size on window resize
-    // but we'll keep this method to implement responsive behavior later
-
-    //this.camera.aspect = window.innerWidth / window.innerHeight;
-    //this.camera.updateProjectionMatrix();
-    //this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   private animate() {

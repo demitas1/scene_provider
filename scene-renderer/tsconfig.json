@@ -5,8 +5,13 @@
     "noImplicitAny": true,
     "module": "es6",
     "target": "es6",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowJs": true,
-    "moduleResolution": "node"
-  }
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
 }
